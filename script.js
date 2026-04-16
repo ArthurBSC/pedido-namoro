@@ -48,9 +48,9 @@ const QUIZ_PERGUNTAS = [
     },
     {
         pergunta: "💗 O que o seu Ken faz quando está com saudade de você?",
-        respostas: ["Dorme logo pra o dia acabar e ficar mais perto de você", "Fica no celular", "Joga videogame", "Chora feio no travesseiro"],
+        respostas: ["Dorme logo pra o dia acabar e ficar mais perto de você", "Imagina mil jeitos de tirar a sua roupa 👀", "Joga videogame", "Chora feio no travesseiro"],
         emoji_certo: "🥺 Exatamente isso... dormir é a forma mais rápida de ir até você ❤️",
-        emoji_errado: "❌ Errou! A resposta é muito mais fofa do que isso 🥹"
+        emoji_errado: "❌ Errou! Bom... essa pode até ser verdade em alguns dias, mas a certa era outra 😈"
     },
     {
         pergunta: "🎵 Qual tipo de música o seu Ken mais ouve?",
@@ -144,8 +144,10 @@ window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
 // =======================
-// INTRO
+// INTRO MINIMALISTA
 // =======================
+// Limpando referencias de names que removi do intro minimalista
+document.querySelectorAll('#barbie-name-reveal').forEach(el => el.textContent = CONFIG.nomeDela);
 document.getElementById('btn-start').addEventListener('click', () => {
     goToScreen(1);
     startQuiz();
@@ -383,15 +385,49 @@ function handleTap() {
         tapDone = true;
         heart.style.animation = 'none';
         setTimeout(() => {
-            triggerConfetti();
-            goToScreen(4);
-            showFinalScreen();
+            goToScreen(4); // Vai para a fase Picante
+            initSpicyCards();
         }, 400);
     }
 }
 
 // =======================
-// TELA FINAL
+// TELA 4 — FASE PICANTE
+// =======================
+function initSpicyCards() {
+    const cards = document.querySelectorAll('.card-spicy');
+    cards.forEach(card => {
+        // Remover listeners antigos se houver
+        const novoCard = card.cloneNode(true);
+        card.parentNode.replaceChild(novoCard, card);
+        
+        novoCard.addEventListener('click', () => {
+            // Desativar clique nas outras
+            document.querySelectorAll('.card-spicy').forEach(c => {
+                c.style.opacity = '0.4';
+                c.style.pointerEvents = 'none';
+            });
+            // Destacar a escolhida
+            novoCard.style.opacity = '1';
+            novoCard.style.transform = 'scale(1.1)';
+            novoCard.style.borderColor = 'var(--barbie-pink)';
+            novoCard.querySelector('.lock-icon').textContent = '🔓';
+            
+            // Mostrar recompensa
+            document.getElementById('spicy-reward-text').textContent = novoCard.dataset.reward;
+            document.getElementById('spicy-reveal').style.display = 'block';
+        });
+    });
+}
+
+document.getElementById('btn-finish').addEventListener('click', () => {
+    triggerConfetti();
+    goToScreen(5);
+    showFinalScreen();
+});
+
+// =======================
+// TELA 5 — FINAL
 // =======================
 function showFinalScreen() {
     document.getElementById('reveal-message').innerHTML = CONFIG.mensagemFinal;

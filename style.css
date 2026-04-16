@@ -59,103 +59,62 @@ body {
 }
 
 /* ===========================
-   TELA 0 — INTRO
+   TELA 0 — INTRO MINIMALISTA
 =========================== */
-.intro-container {
+.minimal-intro {
     text-align: center;
-    max-width: 500px;
+    max-width: 450px;
     width: 100%;
 }
-.hero-badge {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: -10px;
-    margin-bottom: 1rem;
-    animation: float 3s ease-in-out infinite;
+.heart-minimal {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    animation: drift 3s ease-in-out infinite;
 }
-.badge-spider, .badge-heart, .badge-barbie {
-    font-size: 3.5rem;
-    display: inline-block;
-    animation: badgePop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.5) both;
-    filter: drop-shadow(0 0 12px rgba(255,105,180,0.5));
-}
-.badge-spider { animation-delay: 0.1s; }
-.badge-heart  { animation-delay: 0.2s; font-size: 2.5rem; }
-.badge-barbie { animation-delay: 0.3s; }
-@keyframes badgePop {
-    from { opacity: 0; transform: scale(0) rotate(-20deg); }
-    to { opacity: 1; transform: scale(1) rotate(0); }
-}
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-
-.intro-title {
-    font-family: var(--font-comic);
-    font-size: clamp(2.8rem, 10vw, 5rem);
-    letter-spacing: 4px;
-    line-height: 1;
-    margin-bottom: 0.3rem;
-    background: linear-gradient(135deg, var(--spider-red), var(--barbie-pink), var(--gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: none;
-    filter: drop-shadow(0 0 16px rgba(255,105,180,0.3));
-}
-.intro-sub {
-    font-size: 1.2rem;
-    color: var(--barbie-light);
-    margin-bottom: 1.2rem;
-    letter-spacing: 1px;
-}
-.intro-text-box {
-    background: rgba(255,105,180,0.08);
-    border: 1px solid rgba(255,105,180,0.25);
-    border-radius: 12px;
-    padding: 1rem 1.2rem;
-    font-size: 1rem;
-    color: #ddd;
-    line-height: 1.8;
-    margin-bottom: 1.2rem;
-}
-.difficulty-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 1.8rem;
-}
-.stars { display: flex; gap: 2px; }
-.star { font-size: 1.1rem; color: #444; }
-.star.filled { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
-.diff-label { color: var(--danger); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; }
-
-.btn-mega {
-    background: linear-gradient(135deg, var(--spider-red), #ff1a4a, var(--barbie-pink));
-    border: none;
-    border-radius: 50px;
-    padding: 1rem 2.8rem;
-    font-family: var(--font-comic);
-    font-size: 1.6rem;
+@keyframes drift { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.minimal-title {
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    font-weight: 300;
     letter-spacing: 2px;
-    color: white;
+    margin-bottom: 1rem;
+    color: #eee;
+}
+.minimal-line {
+    width: 40px;
+    height: 2px;
+    background: #555;
+    margin: 0 auto 1.5rem;
+}
+.minimal-sub {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #bbb;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+.minimal-fine {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 2.5rem;
+}
+.btn-minimal {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 0.8rem 2.5rem;
+    border-radius: 4px;
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 6px 30px rgba(204,0,0,0.5), 0 0 0 0 rgba(255,105,180,0.5);
-    transition: all 0.2s;
-    animation: pulse-glow 2s ease-in-out infinite;
+    transition: all 0.3s ease;
 }
-.btn-mega:hover { transform: scale(1.07); box-shadow: 0 10px 40px rgba(255,26,74,0.6); }
-.btn-icon { font-size: 1.8rem; animation: spin 3s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes pulse-glow {
-    0%,100% { box-shadow: 0 6px 30px rgba(204,0,0,0.5), 0 0 0 0 rgba(255,105,180,0.4); }
-    50% { box-shadow: 0 6px 30px rgba(204,0,0,0.5), 0 0 0 12px rgba(255,105,180,0); }
+.btn-minimal:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
 }
-.intro-fine { font-size: 0.75rem; color: #555; margin-top: 0.8rem; font-family: var(--font-mono); }
 
 /* ===========================
    TELA 1 — QUIZ
@@ -413,7 +372,65 @@ body {
 }
 
 /* ===========================
-   TELA 4 — REVELAÇÃO
+   TELA 4 — SPICY VOUCHERS
+=========================== */
+.spicy-container {
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+.spicy-header { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 0.5rem; }
+.spicy-fire { font-size: 2.5rem; }
+.spicy-title { font-size: 2rem; color: var(--danger); }
+.spicy-sub { font-size: 1rem; color: #ccc; margin-bottom: 2rem; }
+
+.cards-spicy {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+.card-spicy {
+    background: #1a0f14;
+    border: 1px solid #442233;
+    border-radius: 8px;
+    padding: 2.5rem 1rem;
+    width: 140px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+.card-spicy:hover {
+    background: #2a1122;
+    border-color: var(--barbie-pink);
+    transform: translateY(-5px);
+}
+.lock-icon { font-size: 2rem; margin-bottom: 0.8rem; opacity: 0.5; }
+.card-spicy p { font-size: 0.9rem; color: #bbb; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+
+.spicy-reveal {
+    background: rgba(200, 0, 50, 0.1);
+    border: 1px dashed rgba(255,105,180,0.4);
+    padding: 1.5rem;
+    border-radius: 8px;
+    animation: popIn 0.5s ease both;
+}
+.spicy-reward {
+    font-size: 1.3rem;
+    color: var(--barbie-pink);
+    line-height: 1.5;
+    font-weight: 700;
+}
+.spicy-confirm { border-color: var(--barbie-pink); color: var(--barbie-pink); }
+.spicy-confirm:hover { background: var(--barbie-pink); color: #fff; }
+
+/* ===========================
+   TELA 5 — REVELAÇÃO
 =========================== */
 .reveal-container {
     text-align: center;

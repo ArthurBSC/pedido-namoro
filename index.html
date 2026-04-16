@@ -14,36 +14,18 @@
 
 <canvas id="web-canvas"></canvas>
 
-<!-- ===================== TELA 0: INTRO ===================== -->
+<!-- ===================== TELA 0: INTRO MINIMALISTA ===================== -->
 <section class="screen active" id="screen-0">
-    <div class="intro-container">
-        <div class="hero-badge">
-            <div class="badge-spider">🕷️</div>
-            <div class="badge-heart">❤️</div>
-            <div class="badge-barbie">💗</div>
-        </div>
-        <h1 class="intro-title">MISSÃO SECRETA</h1>
-        <p class="intro-sub">Para: <span id="barbie-name-intro">Barbie</span> 👸</p>
-        <div class="intro-text-box">
-            <p>O seu Ken escondeu uma mensagem especial.</p>
-            <p>Mas pra chegar lá... você precisa provar que <strong>merece</strong> 😏</p>
-        </div>
-        <div class="difficulty-bar">
-            <span>Nível de Dificuldade:</span>
-            <div class="stars">
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-                <span class="star filled">★</span>
-            </div>
-            <span class="diff-label">MAXIMO 💀</span>
-        </div>
-        <button class="btn-mega" id="btn-start">
-            <span>Aceitar Missão</span>
-            <span class="btn-icon">🕷️</span>
+    <div class="minimal-intro">
+        <div class="heart-minimal">🤍</div>
+        <h1 class="minimal-title">Olá, Alice.</h1>
+        <div class="minimal-line"></div>
+        <p class="minimal-sub">Temos assuntos pendentes para tratar amanhã.</p>
+        <p class="minimal-fine">Mas antes, preciso de algumas confirmações de segurança.</p>
+        
+        <button class="btn-minimal" id="btn-start">
+            Iniciar Protocolo
         </button>
-        <p class="intro-fine">* Recusar não é uma opção.</p>
     </div>
 </section>
 
@@ -110,8 +92,41 @@
     </div>
 </section>
 
-<!-- ===================== TELA 4: REVELAÇÃO FINAL ===================== -->
+<!-- ===================== TELA 4: BÔNUS PICANTE PARA AMANHÃ ===================== -->
 <section class="screen" id="screen-4">
+    <div class="spicy-container">
+        <div class="spicy-header">
+            <span class="spicy-fire">🔥</span>
+            <h2 class="spicy-title">Vale-Vip para Amanhã</h2>
+        </div>
+        <p class="spicy-sub">Como você passou nos testes físicos e mentais, escolha UMA carta misteriosa para cobrar presencialmente amanhã:</p>
+        
+        <div class="cards-spicy">
+            <div class="card-spicy" data-reward="Vale de 15 minutos do beijo mais quente que a gente já deu + amasso no sofá 👀">
+                <span class="lock-icon">🔒</span>
+                <p>Mistério 1</p>
+            </div>
+            <div class="card-spicy" data-reward="Vale massagem relaxante pelo corpo todo (e quem sabe termine em algo a mais) 😈">
+                <span class="lock-icon">🔒</span>
+                <p>Mistério 2</p>
+            </div>
+            <div class="card-spicy" data-reward="Vale 100% obediência: eu faço tudo o que você mandar fazer na cama amanhã 🥵">
+                <span class="lock-icon">🔒</span>
+                <p>Mistério 3</p>
+            </div>
+        </div>
+        
+        <div class="spicy-reveal" id="spicy-reveal" style="display: none;">
+            <p style="color: #aaa; margin-bottom: 0.5rem">Você desbloqueou:</p>
+            <h3 id="spicy-reward-text" class="spicy-reward">---</h3>
+            <p style="font-size: 0.85rem; color:#888; margin-top:0.8rem; font-family: var(--font-mono);">📸 *Tire print pra cobrar amanhã!</p>
+            <button class="btn-minimal spicy-confirm" id="btn-finish" style="margin-top:1.5rem;">Ir para surpresa final →</button>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== TELA 5: REVELAÇÃO FINAL ===================== -->
+<section class="screen" id="screen-5">
     <div class="reveal-container">
         <div class="reveal-badge">
             <span>🏆</span>
