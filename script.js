@@ -20,8 +20,16 @@ const CONFIG = {
     // Meta de corações no mini-game
     metaCoracoes: 10,
 
-    // 🎬 Surpresa final: Tobey Maguire dancing meme — clássico icônico, perfeito pra um fã do homem aranha kkk
+    // 🎬 Surpresa final: Tobey Maguire dancing meme
     videoUrl: "https://www.youtube.com/watch?v=1Bix44C1EzY",
+
+    // 😈 Punições que aparecem a cada erro que ela cometer no quiz
+    punicoes: [
+        "Punição #1: Você acaba de ganhar uma dívida. Amanhã tem que me dar um beijaço logo que me ver. 👀",
+        "Punição #2: Dívida acumulada: 15 minutos de massagem e cafuné obrigatório em mim. 💆‍♂️",
+        "Punição #3: Punição grave: Vai ter que usar aquela roupa que eu adoro amanhã... 🔥",
+        "Punição #4: A conta tá ficando cara. O que eu vou fazer com você amanhã não tá escrito... 😈"
+    ]
 };
 
 // ============================================================
@@ -71,7 +79,7 @@ document.getElementById('tap-count-needed').textContent = CONFIG.tapsNecessarios
 document.getElementById('tap-needed').textContent = CONFIG.tapsNecessarios;
 
 // Placar global
-let placar = { quiz: 0, jogo: 0, taps: 0 };
+let placar = { quiz: 0, erros: 0, jogo: 0, taps: 0 };
 
 // =======================
 // TELA — SISTEMA
@@ -216,16 +224,26 @@ function handleAnswer(btn, chosen, q) {
         shakeCard(true);
     } else {
         btn.classList.add('wrong');
+        placar.erros++;
+        
         // Highlight correct
         allBtns.forEach(b => { if (b.textContent === q.correctAnswer) b.classList.add('correct'); });
-        feedback.textContent = q.emoji_errado;
+        
+        // Calcular nível da punição
+        let punicaoTexto = "A conta tá ficando cara. Me aguarde amanhã... 🥵";
+        if (placar.erros <= CONFIG.punicoes.length) {
+            punicaoTexto = CONFIG.punicoes[placar.erros - 1];
+        }
+        
+        // Mostrar a mensagem de erro da pergunta + a punição picante
+        feedback.innerHTML = `❌ Errou!<br><span style="color:var(--barbie-pink);font-size:0.95rem;margin-top:8px;display:block;font-weight:700;">${punicaoTexto}</span>`;
         feedback.className = 'quiz-feedback wrong';
         shakeCard(false);
     }
 
     document.getElementById('hearts-display').textContent = placar.quiz;
     quizIndex++;
-    setTimeout(() => renderQuestion(), 1600);
+    setTimeout(() => renderQuestion(), 2800); // tempo maior pra ela ler a punição
 }
 
 function shakeCard(success) {
