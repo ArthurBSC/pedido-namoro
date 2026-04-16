@@ -1,0 +1,7 @@
+# Dependências
+node_modules/
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini

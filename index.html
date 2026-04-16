@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão Secreta 🕷️💗</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@300;500;700;900&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+<canvas id="web-canvas"></canvas>
+
+<!-- ===================== TELA 0: INTRO ===================== -->
+<section class="screen active" id="screen-0">
+    <div class="intro-container">
+        <div class="hero-badge">
+            <div class="badge-spider">🕷️</div>
+            <div class="badge-heart">❤️</div>
+            <div class="badge-barbie">💗</div>
+        </div>
+        <h1 class="intro-title">MISSÃO SECRETA</h1>
+        <p class="intro-sub">Para: <span id="barbie-name-intro">Barbie</span> 👸</p>
+        <div class="intro-text-box">
+            <p>O seu Ken escondeu uma mensagem especial.</p>
+            <p>Mas pra chegar lá... você precisa provar que <strong>merece</strong> 😏</p>
+        </div>
+        <div class="difficulty-bar">
+            <span>Nível de Dificuldade:</span>
+            <div class="stars">
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+            </div>
+            <span class="diff-label">MAXIMO 💀</span>
+        </div>
+        <button class="btn-mega" id="btn-start">
+            <span>Aceitar Missão</span>
+            <span class="btn-icon">🕷️</span>
+        </button>
+        <p class="intro-fine">* Recusar não é uma opção.</p>
+    </div>
+</section>
+
+<!-- ===================== TELA 1: QUIZ ===================== -->
+<section class="screen" id="screen-1">
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <div class="quiz-label">🕷️ FASE 1 — PROVE QUE ME CONHECE</div>
+            <div class="quiz-progress-wrap">
+                <div class="quiz-progress" id="quiz-progress-bar"></div>
+            </div>
+            <div class="quiz-score-display">
+                ❤️ <span id="hearts-display">0</span> / <span id="quiz-total">0</span>
+            </div>
+        </div>
+        <div class="quiz-card" id="quiz-card">
+            <p class="quiz-question" id="question-text">Carregando...</p>
+            <div class="quiz-options" id="quiz-options"></div>
+        </div>
+        <div class="quiz-feedback" id="quiz-feedback"></div>
+    </div>
+</section>
+
+<!-- ===================== TELA 2: MINI-GAME ===================== -->
+<section class="screen" id="screen-2">
+    <div class="game-container">
+        <div class="game-header">
+            <div class="game-label">💗 FASE 2 — PEGUE OS CORAÇÕES</div>
+            <div class="game-stats">
+                <div class="stat-box">⏱️ <span id="timer-display">20</span>s</div>
+                <div class="stat-box">💖 <span id="score-display">0</span></div>
+            </div>
+        </div>
+        <div class="game-instructions" id="game-instructions">
+            <div class="game-inst-icon">💗</div>
+            <p>Clique nos corações antes que somam!</p>
+            <p class="inst-sub">Mas cuidado com os 🕷️ — eles tiram pontos!</p>
+            <p class="inst-goal">Meta: <strong id="game-goal-text">0</strong> corações</p>
+            <button class="btn-start-game" id="btn-start-game">Começar! →</button>
+        </div>
+        <div class="game-arena" id="game-arena" style="display:none;">
+            <!-- elementos do jogo injetados via JS -->
+        </div>
+        <div class="game-result" id="game-result" style="display:none;"></div>
+    </div>
+</section>
+
+<!-- ===================== TELA 3: DESAFIO FINAL ===================== -->
+<section class="screen" id="screen-3">
+    <div class="final-challenge-box">
+        <div class="final-ch-header">🕷️ FASE FINAL — DESAFIO DO TOQUE</div>
+        <p class="final-ch-sub">Clique no coração secreto <strong id="tap-count-needed">10</strong> vezes, o mais rápido possível!</p>
+        <div class="tap-heart-container">
+            <div class="tap-heart" id="tap-heart">💗</div>
+            <div class="tap-ring" id="tap-ring"></div>
+        </div>
+        <div class="tap-info">
+            <span>Taps: <strong id="tap-current">0</strong></span>
+            <span>/<strong id="tap-needed">10</strong></span>
+        </div>
+        <div class="tap-progress-bar-wrap">
+            <div class="tap-progress-bar" id="tap-progress-bar"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===================== TELA 4: REVELAÇÃO FINAL ===================== -->
+<section class="screen" id="screen-4">
+    <div class="reveal-container">
+        <div class="reveal-badge">
+            <span>🏆</span>
+        </div>
+        <h1 class="reveal-title">MISSÃO CUMPRIDA!</h1>
+        <div class="reveal-split">
+            <div class="reveal-side spider">
+                <div class="char-icon">🕷️</div>
+                <p class="char-name">Seu Ken</p>
+            </div>
+            <div class="reveal-heart-center">❤️</div>
+            <div class="reveal-side barbie">
+                <div class="char-icon">👸</div>
+                <p class="char-name" id="barbie-name-reveal">Barbie</p>
+            </div>
+        </div>
+        <div class="reveal-message" id="reveal-message">
+            <!-- message from config -->
+        </div>
+        <div class="reveal-score-summary">
+            <p>🕷️ Quiz: <strong id="final-quiz-score">-</strong> acertos</p>
+            <p>💗 Corações: <strong id="final-game-score">-</strong> pegos</p>
+            <p>💪 Taps: <strong id="final-tap-score">-</strong> na raça!</p>
+        </div>
+        <div class="redirect-box" id="redirect-box">
+            <p class="redirect-text">Sua surpresa aparece em...</p>
+            <div class="redirect-count" id="redirect-count">5</div>
+        </div>
+    </div>
+</section>
+
+<!-- VIDEO OVERLAY -->
+<div class="video-overlay" id="video-overlay">
+    <div class="video-wrapper">
+        <button class="video-close" id="video-close" title="Fechar">✕</button>
+        <video id="surprise-video" controls autoplay playsinline>
+            <source src="./assets/Video.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo.
+        </video>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

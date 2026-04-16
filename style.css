@@ -1,0 +1,567 @@
+:root {
+    --spider-red: #cc0000;
+    --spider-dark: #8b0000;
+    --barbie-pink: #ff69b4;
+    --barbie-light: #ffb6d9;
+    --bg-dark: #0a0009;
+    --surface: #130d18;
+    --surface2: #1e1228;
+    --text: #ffffff;
+    --text-muted: #aaa;
+    --gold: #ffd700;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --font-comic: 'Bangers', cursive;
+    --font-ui: 'Outfit', sans-serif;
+    --font-mono: 'Courier Prime', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background: var(--bg-dark);
+    color: var(--text);
+    font-family: var(--font-ui);
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#web-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+/* ===========================
+   SCREEN SYSTEM
+=========================== */
+.screen {
+    display: none;
+    width: 100vw;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 10;
+    padding: 1.5rem 1rem;
+    animation: screenIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.1) both;
+}
+.screen.active { display: flex; }
+@keyframes screenIn {
+    from { opacity: 0; transform: scale(0.95) translateY(18px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ===========================
+   TELA 0 — INTRO
+=========================== */
+.intro-container {
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+.hero-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: -10px;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+.badge-spider, .badge-heart, .badge-barbie {
+    font-size: 3.5rem;
+    display: inline-block;
+    animation: badgePop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.5) both;
+    filter: drop-shadow(0 0 12px rgba(255,105,180,0.5));
+}
+.badge-spider { animation-delay: 0.1s; }
+.badge-heart  { animation-delay: 0.2s; font-size: 2.5rem; }
+.badge-barbie { animation-delay: 0.3s; }
+@keyframes badgePop {
+    from { opacity: 0; transform: scale(0) rotate(-20deg); }
+    to { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+.intro-title {
+    font-family: var(--font-comic);
+    font-size: clamp(2.8rem, 10vw, 5rem);
+    letter-spacing: 4px;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(135deg, var(--spider-red), var(--barbie-pink), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    filter: drop-shadow(0 0 16px rgba(255,105,180,0.3));
+}
+.intro-sub {
+    font-size: 1.2rem;
+    color: var(--barbie-light);
+    margin-bottom: 1.2rem;
+    letter-spacing: 1px;
+}
+.intro-text-box {
+    background: rgba(255,105,180,0.08);
+    border: 1px solid rgba(255,105,180,0.25);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    font-size: 1rem;
+    color: #ddd;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+}
+.difficulty-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.8rem;
+}
+.stars { display: flex; gap: 2px; }
+.star { font-size: 1.1rem; color: #444; }
+.star.filled { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
+.diff-label { color: var(--danger); font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; }
+
+.btn-mega {
+    background: linear-gradient(135deg, var(--spider-red), #ff1a4a, var(--barbie-pink));
+    border: none;
+    border-radius: 50px;
+    padding: 1rem 2.8rem;
+    font-family: var(--font-comic);
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 6px 30px rgba(204,0,0,0.5), 0 0 0 0 rgba(255,105,180,0.5);
+    transition: all 0.2s;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+.btn-mega:hover { transform: scale(1.07); box-shadow: 0 10px 40px rgba(255,26,74,0.6); }
+.btn-icon { font-size: 1.8rem; animation: spin 3s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse-glow {
+    0%,100% { box-shadow: 0 6px 30px rgba(204,0,0,0.5), 0 0 0 0 rgba(255,105,180,0.4); }
+    50% { box-shadow: 0 6px 30px rgba(204,0,0,0.5), 0 0 0 12px rgba(255,105,180,0); }
+}
+.intro-fine { font-size: 0.75rem; color: #555; margin-top: 0.8rem; font-family: var(--font-mono); }
+
+/* ===========================
+   TELA 1 — QUIZ
+=========================== */
+.quiz-container {
+    width: min(580px, 95vw);
+}
+.quiz-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.quiz-label {
+    font-family: var(--font-comic);
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    color: var(--spider-red);
+    margin-bottom: 0.6rem;
+    text-shadow: 0 0 12px rgba(204,0,0,0.5);
+}
+.quiz-progress-wrap {
+    background: #222;
+    border-radius: 6px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+}
+.quiz-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--spider-red), var(--barbie-pink));
+    border-radius: 6px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+.quiz-score-display { font-size: 1rem; color: var(--barbie-light); }
+
+.quiz-card {
+    background: var(--surface);
+    border: 1px solid rgba(255,105,180,0.2);
+    border-radius: 16px;
+    padding: 1.5rem 1.5rem 1.2rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease;
+}
+.quiz-question {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+    color: white;
+    min-height: 50px;
+}
+.quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+}
+.quiz-opt {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    font-size: 0.92rem;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    font-family: var(--font-ui);
+}
+.quiz-opt:hover:not(:disabled) { background: rgba(255,105,180,0.15); border-color: var(--barbie-pink); transform: scale(1.03); }
+.quiz-opt.correct { background: rgba(46,204,113,0.2); border-color: var(--success); color: var(--success); }
+.quiz-opt.wrong { background: rgba(231,76,60,0.2); border-color: var(--danger); color: var(--danger); }
+.quiz-opt:disabled { cursor: default; opacity: 0.8; transform: none !important; }
+
+.quiz-feedback {
+    text-align: center;
+    font-size: 1rem;
+    min-height: 36px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+.quiz-feedback.correct { color: var(--success); }
+.quiz-feedback.wrong { color: var(--danger); }
+
+/* ===========================
+   TELA 2 — MINI-GAME
+=========================== */
+.game-container {
+    width: min(580px, 95vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.game-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.game-label {
+    font-family: var(--font-comic);
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    color: var(--barbie-pink);
+    text-shadow: 0 0 10px rgba(255,105,180,0.5);
+}
+.game-stats { display: flex; gap: 0.7rem; }
+.stat-box {
+    background: var(--surface);
+    border: 1px solid rgba(255,105,180,0.25);
+    border-radius: 8px;
+    padding: 0.4rem 0.9rem;
+    font-weight: 700;
+    font-size: 1rem;
+}
+.game-instructions {
+    background: var(--surface);
+    border: 1px solid rgba(255,105,180,0.2);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+.game-inst-icon { font-size: 3.5rem; margin-bottom: 0.8rem; animation: float 2s ease-in-out infinite; }
+.game-instructions p { font-size: 1rem; color: #ccc; margin-bottom: 0.4rem; }
+.inst-sub { font-size: 0.9rem !important; color: #888 !important; }
+.inst-goal { color: var(--barbie-light) !important; font-size: 1.1rem !important; margin-top: 0.8rem !important; }
+.btn-start-game {
+    margin-top: 1.2rem;
+    background: linear-gradient(135deg, var(--barbie-pink), #ff1493);
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    font-family: var(--font-comic);
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,105,180,0.4);
+    transition: all 0.2s;
+}
+.btn-start-game:hover { transform: scale(1.05); }
+
+.game-arena {
+    width: 100%;
+    height: 380px;
+    background: var(--surface);
+    border: 1px solid rgba(255,105,180,0.2);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    cursor: crosshair;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+.game-arena::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(255,105,180,0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.game-token {
+    position: absolute;
+    font-size: 2.2rem;
+    cursor: pointer;
+    user-select: none;
+    animation: tokenFall linear forwards;
+    transition: transform 0.1s;
+    will-change: transform;
+}
+.game-token:hover { transform: scale(1.3); }
+@keyframes tokenFall {
+    from { top: -60px; }
+    to { top: 110%; }
+}
+
+.game-result {
+    width: 100%;
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid rgba(255,105,180,0.2);
+}
+
+/* ===========================
+   TELA 3 — TAP CHALLENGE
+=========================== */
+.final-challenge-box {
+    text-align: center;
+    width: min(420px, 90vw);
+}
+.final-ch-header {
+    font-family: var(--font-comic);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-shadow: 0 0 12px rgba(255,215,0,0.5);
+    margin-bottom: 0.6rem;
+}
+.final-ch-sub { font-size: 0.95rem; color: #bbb; margin-bottom: 2rem; }
+.tap-heart-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+.tap-heart {
+    font-size: 7rem;
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    filter: drop-shadow(0 0 20px rgba(255,105,180,0.6));
+    transition: transform 0.08s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+.tap-heart:active { transform: scale(0.85); }
+@keyframes heartbeat {
+    0%,100%{transform:scale(1)} 50%{transform:scale(1.1)}
+}
+.tap-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%) scale(0);
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 3px solid var(--barbie-pink);
+    opacity: 0;
+    pointer-events: none;
+}
+.ring-animate {
+    animation: ringOut 0.4s ease-out forwards !important;
+}
+@keyframes ringOut {
+    from { transform: translate(-50%,-50%) scale(0.5); opacity: 0.8; }
+    to   { transform: translate(-50%,-50%) scale(2); opacity: 0; }
+}
+.tap-info { font-size: 1.2rem; margin-bottom: 0.6rem; }
+.tap-progress-bar-wrap {
+    background: #222;
+    border-radius: 8px;
+    height: 14px;
+    overflow: hidden;
+    max-width: 300px;
+    margin: 0 auto;
+}
+.tap-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--barbie-pink), var(--gold));
+    border-radius: 8px;
+    transition: width 0.15s ease;
+}
+
+/* ===========================
+   TELA 4 — REVELAÇÃO
+=========================== */
+.reveal-container {
+    text-align: center;
+    width: min(560px, 92vw);
+}
+.reveal-badge {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    animation: float 2.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px var(--gold));
+}
+.reveal-title {
+    font-family: var(--font-comic);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, var(--gold), var(--barbie-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.2rem;
+}
+.reveal-split {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.reveal-side {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 1rem 1.5rem;
+    border: 2px solid transparent;
+    flex: 1;
+}
+.reveal-side.spider { border-color: var(--spider-red); box-shadow: 0 0 20px rgba(204,0,0,0.2); }
+.reveal-side.barbie { border-color: var(--barbie-pink); box-shadow: 0 0 20px rgba(255,105,180,0.2); }
+.char-icon { font-size: 2.8rem; margin-bottom: 0.3rem; }
+.char-name { font-weight: 700; font-size: 0.9rem; color: #ccc; }
+.reveal-heart-center { font-size: 2.5rem; animation: heartbeat 1.2s ease-in-out infinite; flex-shrink: 0; }
+
+.reveal-message {
+    background: rgba(255,105,180,0.1);
+    border: 1px solid rgba(255,105,180,0.3);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #eee;
+    margin-bottom: 1.2rem;
+}
+.reveal-score-summary {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 1.5rem;
+}
+.reveal-score-summary strong { color: var(--barbie-light); }
+
+.redirect-box {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px dashed rgba(255,215,0,0.3);
+}
+.redirect-text { font-size: 0.9rem; color: #888; margin-bottom: 0.5rem; }
+.redirect-count {
+    font-family: var(--font-comic);
+    font-size: 3rem;
+    color: var(--gold);
+    text-shadow: 0 0 20px var(--gold);
+    animation: heartbeat 1s ease-in-out infinite;
+}
+
+/* ===========================
+   POP NUMBERS (game feedback)
+=========================== */
+.pop-num {
+    position: absolute;
+    font-weight: 900;
+    font-size: 1.5rem;
+    pointer-events: none;
+    animation: popNum 0.8s ease-out forwards;
+    z-index: 100;
+}
+.pop-num.pos { color: var(--barbie-pink); }
+.pop-num.neg { color: var(--danger); }
+@keyframes popNum {
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to { opacity: 0; transform: translateY(-60px) scale(1.3); }
+}
+
+/* ===========================
+   VIDEO OVERLAY
+=========================== */
+.video-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    animation: screenIn 0.4s ease both;
+}
+.video-overlay.active { display: flex; }
+
+.video-wrapper {
+    position: relative;
+    width: min(800px, 95vw);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 80px rgba(255,105,180,0.3), 0 20px 60px rgba(0,0,0,0.8);
+    border: 2px solid rgba(255,105,180,0.3);
+    animation: popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;
+}
+@keyframes popIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.video-wrapper video {
+    display: block;
+    width: 100%;
+    max-height: 80vh;
+    background: #000;
+}
+
+.video-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    font-size: 1.1rem;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+}
+.video-close:hover { background: var(--danger); transform: scale(1.1); }
+
